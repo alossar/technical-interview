@@ -13,15 +13,14 @@ namespace TechnicalInterview
             // Check if words has already been generated in list.
 
             HashSet<string> dictionary = new HashSet<string>();
+            HashSet<string> visited = new HashSet<string>();
             Dictionary<string, HashSet<string>> graph = new Dictionary<string, HashSet<string>>();
-            Dictionary<string, string> parents = new Dictionary<string, string>();
-            IList<IList<string>> ladders = new List<IList<string>>();
+            Dictionary<string, HashSet<string>> parents = new Dictionary<string, HashSet<string>>();
 
             for (int i = 0; i < wordList.Count; i++)
                 dictionary.Add(wordList[i]);
 
-            if (!dictionary.Contains(endWord))
-                return ladders;
+            if (!dictionary.Contains(endWord)) return new List<IList<string>>();
 
             dictionary.Add(beginWord);
             foreach (string word in dictionary)
@@ -34,27 +33,47 @@ namespace TechnicalInterview
             while (toVisit.Count > 0)
             {
                 string node = toVisit.Dequeue();
+                visited.Add(node);
                 if (node == endWord) break;
 
                 foreach (string neighbor in graph[node])
                 {
-                    if (!parents.ContainsKey(neighbor))
+                    if (!visited.Contains(neighbor))
                     {
                         toVisit.Enqueue(neighbor);
-                        parents[neighbor] = node;
+                        if (!parents.ContainsKey(neighbor))
+                        {
+                            parents[neighbor] = new HashSet<string>();
+                        }
+                        parents[neighbor].Add(node);
                     }
                 }
             }
 
-            if (!parents.ContainsKey(endWord)) return ladders;
+            if (!parents.ContainsKey(endWord)) return new List<IList<string>>();
 
             string current = endWord;
-            while (beginWord != current)
+            IList<IList<string>> ladders = BuildLadders(beginWord, endWord, current, parents);
+            return ladders;
+        }
+
+        private IList<IList<string>> BuildLadders(string beginWord, string endWord, string currentWord, Dictionary<string, HashSet<string>> parents)
+        {
+            if (beginWord == currentWord)
+                return new List<IList<string>>() { new List<string> { currentWord } };
+
+            IList<IList<string>> result = new List<IList<string>>();
+            foreach (string neighbor in parents[currentWord])
             {
-                current = parents[current];
+                IList<IList<string>> paths = BuildLadders(beginWord, endWord, neighbor, parents);
+                foreach (IList<string> path in paths)
+                {
+                    path.Add(neighbor);
+                    result.Add(path);
+                }
             }
 
-            return ladders;
+            return result;
         }
 
         private HashSet<string> FindNeighbors(string beginWord, HashSet<string> dictionary)
