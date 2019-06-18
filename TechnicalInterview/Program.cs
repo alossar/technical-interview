@@ -17,6 +17,8 @@ namespace TechnicalInterview
             TestEvalReversePolishNotation();
             TestGroupAnagrams();
             TestWordBreak();
+            TestInorderTraversal();
+            TestZigzagLevelOrderTraversal();
         }
 
         static void TestNumIslands()
@@ -102,6 +104,24 @@ namespace TechnicalInterview
             bool result = q.WordBreak(word, dict);
             Console.WriteLine(result);
         }
+
+        static void TestInorderTraversal()
+        {
+            TreeNode tree = new TreeNode(1);
+            tree.right = new TreeNode(2);
+            tree.right.left = new TreeNode(3);
+            IList<int> result = q.InorderTraversal(tree);
+            Console.WriteLine(result);
+        }
+
+        static void TestZigzagLevelOrderTraversal()
+        {
+            TreeNode tree = new TreeNode(1);
+            tree.right = new TreeNode(2);
+            tree.right.left = new TreeNode(3);
+            IList<IList<int>> result = q.ZigzagLevelOrder(tree);
+            Console.WriteLine(result);
+        }
     }
 
     public class TreeNode
@@ -112,49 +132,64 @@ namespace TechnicalInterview
         public TreeNode(int x) { val = x; }
     }
 
-
-    public class Trie
+    public class PointerTreeNode
     {
-        Dictionary<char, Trie> children;
+        public int val;
+        public PointerTreeNode left;
+        public PointerTreeNode right;
+        public PointerTreeNode next;
 
-        public Trie()
+        public PointerTreeNode() { }
+        public PointerTreeNode(int _val, PointerTreeNode _left, PointerTreeNode _right, PointerTreeNode _next)
         {
-            children = new Dictionary<char, Trie>();
+            val = _val;
+            left = _left;
+            right = _right;
+            next = _next;
         }
 
-        private bool ContainsKey(char letter)
+        public class Trie
         {
-            return children.ContainsKey(letter);
-        }
+            Dictionary<char, Trie> children;
 
-        public void Add(string word)
-        {
-            Trie current = this;
-            for (int i = 0; i < word.Length; i++)
+            public Trie()
             {
-                if (!current.ContainsKey(word[i]))
-                {
-                    current.children[word[i]] = new Trie();
-                }
-                current = current.children[word[i]];
+                children = new Dictionary<char, Trie>();
             }
-        }
 
-        public bool Contains(string word)
-        {
-            Trie current = this;
-            int wordIndex = 0;
-            while (current != null)
+            private bool ContainsKey(char letter)
             {
-                if (current.ContainsKey(word[wordIndex]))
-                {
-                    current = current.children[word[wordIndex]];
-                    wordIndex++;
-                }
-                else
-                    break;
+                return children.ContainsKey(letter);
             }
-            return wordIndex == word.Length - 1;
+
+            public void Add(string word)
+            {
+                Trie current = this;
+                for (int i = 0; i < word.Length; i++)
+                {
+                    if (!current.ContainsKey(word[i]))
+                    {
+                        current.children[word[i]] = new Trie();
+                    }
+                    current = current.children[word[i]];
+                }
+            }
+
+            public bool Contains(string word)
+            {
+                Trie current = this;
+                int wordIndex = 0;
+                while (current != null)
+                {
+                    if (current.ContainsKey(word[wordIndex]))
+                    {
+                        current = current.children[word[wordIndex]];
+                        wordIndex++;
+                    }
+                    else
+                        break;
+                }
+                return wordIndex == word.Length - 1;
+            }
         }
     }
-}
