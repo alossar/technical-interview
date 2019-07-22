@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using TechnicalInterview.DataStructures;
 
-namespace TechnicalInterview
+namespace TechnicalInterview.Questions
 {
-    public partial class Question
+    public class ZigzagLevelOrderTraversal : Question
     {
         public IList<IList<int>> ZigzagLevelOrder(TreeNode root)
         {
@@ -46,6 +46,15 @@ namespace TechnicalInterview
                 result.Add(current.val);
             }
             return result;
+        }
+
+        public override void Test()
+        {
+            TreeNode tree = new TreeNode(1);
+            tree.right = new TreeNode(2);
+            tree.right.left = new TreeNode(3);
+            IList<IList<int>> result = ZigzagLevelOrder(tree);
+            Console.WriteLine(result);
         }
     }
 }

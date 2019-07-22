@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TechnicalInterview
+namespace TechnicalInterview.Questions
 {
-    public partial class Question
+    public class WordLadderII : Question
     {
         public IList<IList<string>> FindLadders(string beginWord, string endWord, IList<string> wordList)
         {
@@ -55,6 +55,15 @@ namespace TechnicalInterview
             string current = endWord;
             IList<IList<string>> ladders = BuildLadders(beginWord, endWord, current, parents);
             return ladders;
+        }
+
+        public override void Test()
+        {
+            string beginWord = "hit";
+            string endWord = "cog";
+            IList<string> dictionary = new List<string>() { "hot", "dot", "dog", "lot", "log", "cog" };
+            IList<IList<string>> result = FindLadders(beginWord, endWord, dictionary);
+            Console.WriteLine(result);
         }
 
         private IList<IList<string>> BuildLadders(string beginWord, string endWord, string currentWord, Dictionary<string, HashSet<string>> parents)

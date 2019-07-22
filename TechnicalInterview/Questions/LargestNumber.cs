@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TechnicalInterview
+namespace TechnicalInterview.Questions
 {
-   public partial class Question
+    public class LargestNumber : Question
     {
-        public string LargestNumber(int[] nums)
+        public string Solution(int[] nums)
         {
             return string.Empty;
+        }
+
+        public override void Test()
+        {
+            throw new NotImplementedException();
         }
     }
 

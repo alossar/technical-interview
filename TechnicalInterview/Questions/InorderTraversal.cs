@@ -1,27 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using TechnicalInterview.DataStructures;
 
-namespace TechnicalInterview
+namespace TechnicalInterview.Questions
 {
-    public partial class Question
+    public class InorderTraversal : Question
     {
-        public IList<int> InorderTraversal(TreeNode root)
+        public IList<int> Solution(TreeNode root)
         {
             IList<int> result = new List<int>();
             InorderTraversalIterative(root, result);
             return result;
         }
 
-        private void InorderTraversal(TreeNode root, IList<int> result)
+        private void InorderTraversalSolution(TreeNode root, IList<int> result)
         {
             if (root == null)
             {
                 return;
             }
-            InorderTraversal(root.left, result);
+            InorderTraversalSolution(root.left, result);
             result.Add(root.val);
-            InorderTraversal(root.right, result);
+            InorderTraversalSolution(root.right, result);
         }
 
         private void InorderTraversalIterative(TreeNode root, IList<int> result)
@@ -40,6 +40,15 @@ namespace TechnicalInterview
                 result.Add(current.val);
                 current = current.right;
             }
+        }
+
+        public override void Test()
+        {
+            TreeNode tree = new TreeNode(1);
+            tree.right = new TreeNode(2);
+            tree.right.left = new TreeNode(3);
+            IList<int> result = Solution(tree);
+            Console.WriteLine(result);
         }
     }
 }

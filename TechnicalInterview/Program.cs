@@ -1,195 +1,76 @@
 ﻿using System;
 using System.Collections.Generic;
+using TechnicalInterview.DataStructures;
+using TechnicalInterview.Questions;
 
 namespace TechnicalInterview
 {
     class Program
     {
-        private static Question q = new Question();
+        private static List<Question> questions = new List<Question>();
 
         static void Main(string[] args)
         {
-            TestNumIslands();
-            TestWordLadder();
-            TestWordLadderII();
-            TestSetMatrixZeroes();
-            TestUniquePaths();
-            TestEvalReversePolishNotation();
-            TestGroupAnagrams();
-            TestWordBreak();
-            TestInorderTraversal();
-            TestZigzagLevelOrderTraversal();
+            TestQuestions();
+            TestDataStructures();
         }
 
-        static void TestNumIslands()
+        private static void TestQuestions()
         {
-            char[][] grid = new char[][] {
-                new char[] { '1', '1', '1' },
-                new char[] { '0', '1', '0' },
-                new char[] { '1', '1', '1' }
-            };
-            q.NumIslands(grid);
+            questions.Add(new NumberOfIslands());
+            questions.Add(new WordLadder());
+            questions.Add(new WordLadderII());
+            questions.Add(new SetZeroes());
+            questions.Add(new UniquePaths());
+            questions.Add(new EvaluateReversePolishNotation());
+            questions.Add(new GroupAnagrams());
+            questions.Add(new WordBreak());
+            questions.Add(new InorderTraversal());
+            questions.Add(new ZigzagLevelOrderTraversal());
+            questions.Add(new IntersectionOfTwoLinkedLists());
+            questions.Add(new OddEvenList());
+            questions.Add(new SpiralMatrix());
+            questions.Add(new FirstMissingPositive());
+            questions.Add(new LetterTilePossibilities());
+            questions.Add(new CheckIfWordIsValidAfterSubstitutions());
+            questions.Add(new CombinationSumII());
+
+            foreach (Question q in questions)
+            {
+                Console.WriteLine($"Testing {q.GetType().Name}");
+                q.Test();
+                Console.WriteLine($"");
+            }
         }
 
-        static void TestWordLadderII()
+        private static void TestDataStructures()
         {
-            string beginWord = "hit";
-            string endWord = "cog";
-            IList<string> dictionary = new List<string>() { "hot", "dot", "dog", "lot", "log", "cog" };
-            IList<IList<string>> result = q.FindLadders(beginWord, endWord, dictionary);
-            Console.WriteLine(result);
+            TestLRUCache();
+            TestTrie();
         }
 
-        static void TestWordLadder()
+        private static void TestLRUCache()
         {
-            string beginWord = "hit";
-            string endWord = "cog";
-            IList<string> dictionary = new List<string>() { "hot", "dot", "dog", "lot", "log", "cog" };
-            int result = q.LadderLength(beginWord, endWord, dictionary);
-
-            beginWord = "qa";
-            endWord = "sq";
-            dictionary = new List<string>() { "si", "go", "se", "cm", "so", "ph", "mt", "db", "mb", "sb", "kr", "ln", "tm", "le", "av", "sm", "ar", "ci", "ca", "br", "ti", "ba", "to", "ra", "fa", "yo", "ow", "sn", "ya", "cr", "po", "fe", "ho", "ma", "re", "or", "rn", "au", "ur", "rh", "sr", "tc", "lt", "lo", "as", "fr", "nb", "yb", "if", "pb", "ge", "th", "pm", "rb", "sh", "co", "ga", "li", "ha", "hz", "no", "bi", "di", "hi", "qa", "pi", "os", "uh", "wm", "an", "me", "mo", "na", "la", "st", "er", "sc", "ne", "mn", "mi", "am", "ex", "pt", "io", "be", "fm", "ta", "tb", "ni", "mr", "pa", "he", "lr", "sq", "ye" };
-            result = q.LadderLength(beginWord, endWord, dictionary);
-            Console.WriteLine(result);
+            Console.WriteLine($"Testing LRU Cache");
+            LRUCache cache = new LRUCache(2);
+            cache.Put(1, 1);
+            cache.Put(2, 2);
+            cache.Get(1);       // returns 1
+            cache.Put(3, 3);    // evicts key 2
+            cache.Get(2);       // returns -1 (not found)
+            cache.Put(4, 4);    // evicts key 1
+            cache.Get(1);       // returns -1 (not found)
+            cache.Get(3);       // returns 3
+            cache.Get(4);       // returns 4
+            Console.WriteLine($"");
         }
 
-        static void TestSetMatrixZeroes()
+        private static void TestTrie()
         {
-            int[][] matrix = new int[][] { new int[] { 0, 1, 2, 0 }, new int[] { 3, 4, 5, 2 }, new int[] { 1, 3, 1, 5 } };
-            q.SetZeroes(matrix);
-            Console.WriteLine(matrix);
-
-            matrix = new int[][] { new int[] { 1, 1, 1 }, new int[] { 0, 1, 2 } };
-            q.SetZeroes(matrix);
-            Console.WriteLine(matrix);
-        }
-
-        static void TestUniquePaths()
-        {
-            int result = q.UniquePaths(3, 2);
-            Console.WriteLine(result);
-
-            result = q.UniquePaths(7, 3);
-            Console.WriteLine(result);
-        }
-
-        static void TestEvalReversePolishNotation()
-        {
-            string[] tokens = new string[] { "2", "1", "+", "3", "*" };
-            int result = q.EvalRPN(tokens);
-            Console.WriteLine(result);
-
-            tokens = new string[] { "4", "13", "5", "/", "+" };
-            result = q.EvalRPN(tokens);
-            Console.WriteLine(result);
-
-            tokens = new string[] { "10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+" };
-            result = q.EvalRPN(tokens);
-            Console.WriteLine(result);
-        }
-
-        static void TestGroupAnagrams()
-        {
-            string[] strs = new string[] { "eat", "tea", "tan", "ate", "nat", "bat" };
-            IList<IList<string>> result = q.GroupAnagrams(strs);
-            Console.WriteLine(result);
-        }
-
-
-        static void TestWordBreak()
-        {
-            IList<string> dict = new List<string> { "leet", "code" };
-            string word = "leetcode";
-            bool result = q.WordBreak(word, dict);
-            Console.WriteLine(result);
-        }
-
-        static void TestInorderTraversal()
-        {
-            TreeNode tree = new TreeNode(1);
-            tree.right = new TreeNode(2);
-            tree.right.left = new TreeNode(3);
-            IList<int> result = q.InorderTraversal(tree);
-            Console.WriteLine(result);
-        }
-
-        static void TestZigzagLevelOrderTraversal()
-        {
-            TreeNode tree = new TreeNode(1);
-            tree.right = new TreeNode(2);
-            tree.right.left = new TreeNode(3);
-            IList<IList<int>> result = q.ZigzagLevelOrder(tree);
-            Console.WriteLine(result);
+            Console.WriteLine($"Testing Trie");
+            Trie trie = new Trie();
+            Console.WriteLine($"");
         }
     }
 
-    public class TreeNode
-    {
-        public int val;
-        public TreeNode left;
-        public TreeNode right;
-        public TreeNode(int x) { val = x; }
-    }
-
-    public class PointerTreeNode
-    {
-        public int val;
-        public PointerTreeNode left;
-        public PointerTreeNode right;
-        public PointerTreeNode next;
-
-        public PointerTreeNode() { }
-        public PointerTreeNode(int _val, PointerTreeNode _left, PointerTreeNode _right, PointerTreeNode _next)
-        {
-            val = _val;
-            left = _left;
-            right = _right;
-            next = _next;
-        }
-
-        public class Trie
-        {
-            Dictionary<char, Trie> children;
-
-            public Trie()
-            {
-                children = new Dictionary<char, Trie>();
-            }
-
-            private bool ContainsKey(char letter)
-            {
-                return children.ContainsKey(letter);
-            }
-
-            public void Add(string word)
-            {
-                Trie current = this;
-                for (int i = 0; i < word.Length; i++)
-                {
-                    if (!current.ContainsKey(word[i]))
-                    {
-                        current.children[word[i]] = new Trie();
-                    }
-                    current = current.children[word[i]];
-                }
-            }
-
-            public bool Contains(string word)
-            {
-                Trie current = this;
-                int wordIndex = 0;
-                while (current != null)
-                {
-                    if (current.ContainsKey(word[wordIndex]))
-                    {
-                        current = current.children[word[wordIndex]];
-                        wordIndex++;
-                    }
-                    else
-                        break;
-                }
-                return wordIndex == word.Length - 1;
-            }
-        }
-    }
+}

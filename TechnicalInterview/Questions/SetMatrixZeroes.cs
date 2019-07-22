@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace TechnicalInterview
+namespace TechnicalInterview.Questions
 {
-    public partial class Question
+    /// <summary>
+    /// Given a m x n matrix, if an element is 0, set its entire row and column to 0. Do it in-place.
+    /// </summary>
+    public class SetZeroes : Question
     {
-        /// <summary>
-        /// Given a m x n matrix, if an element is 0, set its entire row and column to 0. Do it in-place.
-        /// </summary>
-        /// <param name="matrix"></param>
-        public void SetZeroes(int[][] matrix)
+        public void Solution(int[][] matrix)
         {
             if (matrix == null || matrix.Length == 0 || matrix[0].Length == 0)
                 return;
@@ -53,6 +50,17 @@ namespace TechnicalInterview
                     matrix[i][0] = 0;
                 }
             }
+        }
+
+        public override void Test()
+        {
+            int[][] matrix = new int[][] { new int[] { 0, 1, 2, 0 }, new int[] { 3, 4, 5, 2 }, new int[] { 1, 3, 1, 5 } };
+            Solution(matrix);
+            Console.WriteLine(matrix);
+
+            matrix = new int[][] { new int[] { 1, 1, 1 }, new int[] { 0, 1, 2 } };
+            Solution(matrix);
+            Console.WriteLine(matrix);
         }
     }
 }

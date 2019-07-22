@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TechnicalInterview
+namespace TechnicalInterview.Questions
 {
-    public partial class Question
+    public class WordLadder : Question
     {
         public int LadderLength(string beginWord, string endWord, IList<string> wordList)
         {
@@ -57,7 +57,21 @@ namespace TechnicalInterview
 
             return steps;
         }
-        
+
+        public override void Test()
+        {
+            string beginWord = "hit";
+            string endWord = "cog";
+            IList<string> dictionary = new List<string>() { "hot", "dot", "dog", "lot", "log", "cog" };
+            int result = LadderLength(beginWord, endWord, dictionary);
+
+            beginWord = "qa";
+            endWord = "sq";
+            dictionary = new List<string>() { "si", "go", "se", "cm", "so", "ph", "mt", "db", "mb", "sb", "kr", "ln", "tm", "le", "av", "sm", "ar", "ci", "ca", "br", "ti", "ba", "to", "ra", "fa", "yo", "ow", "sn", "ya", "cr", "po", "fe", "ho", "ma", "re", "or", "rn", "au", "ur", "rh", "sr", "tc", "lt", "lo", "as", "fr", "nb", "yb", "if", "pb", "ge", "th", "pm", "rb", "sh", "co", "ga", "li", "ha", "hz", "no", "bi", "di", "hi", "qa", "pi", "os", "uh", "wm", "an", "me", "mo", "na", "la", "st", "er", "sc", "ne", "mn", "mi", "am", "ex", "pt", "io", "be", "fm", "ta", "tb", "ni", "mr", "pa", "he", "lr", "sq", "ye" };
+            result = LadderLength(beginWord, endWord, dictionary);
+            Console.WriteLine(result);
+        }
+
         private HashSet<string> FindLadderNeighbors(string beginWord, HashSet<string> dictionary)
         {
             HashSet<string> neighbors = new HashSet<string>();

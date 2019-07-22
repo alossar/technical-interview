@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace TechnicalInterview
+namespace TechnicalInterview.Questions
 {
-    public partial class Question
+    public class NumberOfIslands : Question
     {
-        public int NumIslands(char[][] grid)
+        public int Solution(char[][] grid)
         {
             bool[][] visited = new bool[grid.Length][];
             for (int i = 0; i < grid.Length; i++)
@@ -24,6 +22,16 @@ namespace TechnicalInterview
                 }
 
             return islands;
+        }
+
+        public override void Test()
+        {
+            char[][] grid = new char[][] {
+                new char[] { '1', '1', '1' },
+                new char[] { '0', '1', '0' },
+                new char[] { '1', '1', '1' }
+            };
+            Solution(grid);
         }
 
         private void TraverseIsland(char[][] grid, bool[][] visited, int row, int col)

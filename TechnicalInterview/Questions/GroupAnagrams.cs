@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TechnicalInterview
+namespace TechnicalInterview.Questions
 {
-    public partial class Question
+    public class GroupAnagrams : Question
     {
-        public IList<IList<string>> GroupAnagrams(string[] strs)
+        public IList<IList<string>> Solution(string[] strs)
         {
             Dictionary<string, IList<string>> groups = new Dictionary<string, IList<string>>();
             HashSet<string> xors = new HashSet<string>();
@@ -29,6 +29,13 @@ namespace TechnicalInterview
                 result.Add(groups[hash]);
             }
             return result;
+        }
+
+        public override void Test()
+        {
+            string[] strs = new string[] { "eat", "tea", "tan", "ate", "nat", "bat" };
+            IList<IList<string>> result = Solution(strs);
+            Console.WriteLine(result);
         }
 
         private string GetXORHash(int[] xor)
